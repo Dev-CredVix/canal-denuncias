@@ -2,6 +2,7 @@
   const SUPABASE_URL = 'https://uexvojgictmkuackpofk.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_o9X7Cc1xo4eJUAjdKMW5TQ_JzIcQLJp';
   const API_URL = `${SUPABASE_URL}/functions/v1/reporting-channel`;
+  const ADMIN_REDIRECT_URL = 'https://dev-credvix.github.io/canal-denuncias/admin.html';
   const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const login = document.getElementById('adminLogin');
@@ -48,7 +49,7 @@
     try {
       const { error } = await client.auth.signInWithOtp({
         email: loginEmail.value.trim(),
-        options:{ shouldCreateUser:false, emailRedirectTo: location.href.split('#')[0] }
+        options:{ shouldCreateUser:false, emailRedirectTo: ADMIN_REDIRECT_URL }
       });
       if (error) throw error;
       loginMessage.textContent = 'Link de acesso enviado. Verifique o e-mail e abra o link neste navegador.';
