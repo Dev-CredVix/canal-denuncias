@@ -6,6 +6,11 @@
   fontLink.href = 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800;900&display=swap';
   document.head.appendChild(fontLink);
 
+  const visualLink = document.createElement('link');
+  visualLink.rel = 'stylesheet';
+  visualLink.href = 'assets/hero-visual-refresh.css';
+  document.head.appendChild(visualLink);
+
   const typography = document.createElement('style');
   typography.textContent = `
     body, button, input, textarea, select {
