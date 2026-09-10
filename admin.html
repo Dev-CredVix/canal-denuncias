@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff7ef">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Painel interno — Canal de Denúncias Credvix</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/brand-refresh.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin-body">
+  <header class="site-header is-scrolled">
+    <div class="container header-inner">
+      <a class="brand" href="./"><img src="assets/logo-credvix.webp" alt="Credvix"></a>
+      <div class="header-actions"><a class="btn btn-secondary" href="./">Canal público</a></div>
+    </div>
+  </header>
+
+  <main class="admin-shell">
+    <section class="admin-login active" id="adminLogin">
+      <div class="admin-card login-card">
+        <span class="eyebrow">Área restrita</span>
+        <h1>Painel do canal</h1>
+        <p>Acesso exclusivo a revisores autorizados. Entre com o e-mail corporativo cadastrado.</p>
+        <form id="loginForm">
+          <div class="admin-field"><label for="loginEmail">E-mail</label><input id="loginEmail" type="email" autocomplete="email" value="rh@credvix.com" required></div>
+          <button class="btn btn-primary" type="submit" id="loginBtn" style="margin-top:16px;width:100%">Enviar link de acesso</button>
+          <div class="admin-error" id="loginError"></div>
+          <p id="loginMessage" style="display:none;margin-top:14px"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="admin-panel" id="adminPanel">
+      <div class="admin-container">
+        <div class="admin-topbar">
+          <div><span class="eyebrow">Área restrita</span><h1>Denúncias</h1><p>Triagem, análise, evidências e atualizações públicas.</p></div>
+          <div class="admin-user"><span id="reviewerEmail"></span><button class="btn btn-secondary" id="logoutBtn" type="button">Sair</button></div>
+        </div>
+
+        <div class="admin-grid">
+          <aside class="admin-card admin-list-card">
+            <div class="admin-list-header"><div class="admin-filters"><input class="input" id="searchReports" placeholder="Buscar protocolo, categoria ou unidade"><select class="input" id="statusFilter"><option value="">Todos</option><option value="received">Recebidos</option><option value="in_review">Em análise</option><option value="closed">Encerrados</option></select></div></div>
+            <div class="report-list" id="reportList"><div class="admin-loading">Carregando relatos...</div></div>
+          </aside>
+
+          <section class="admin-card admin-detail" id="adminDetail">
+            <div class="empty-detail"><div><strong>Selecione uma denúncia</strong><p>Os detalhes completos aparecerão aqui.</p></div></div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>
