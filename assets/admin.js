@@ -2,14 +2,17 @@
   const SUPABASE_URL = 'https://uexvojgictmkuackpofk.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_o9X7Cc1xo4eJUAjdKMW5TQ_JzIcQLJp';
   const API_URL = `${SUPABASE_URL}/functions/v1/reporting-channel`;
-  const ADMIN_REDIRECT_URL = 'https://dev-credvix.github.io/canal-denuncias/admin.html';
   const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   const login = document.getElementById('adminLogin');
   const panel = document.getElementById('adminPanel');
   const loginForm = document.getElementById('loginForm');
+  const otpForm = document.getElementById('otpForm');
   const loginEmail = document.getElementById('loginEmail');
+  const otpCode = document.getElementById('otpCode');
   const loginBtn = document.getElementById('loginBtn');
+  const otpBtn = document.getElementById('otpBtn');
+  const changeEmailBtn = document.getElementById('changeEmailBtn');
   const loginError = document.getElementById('loginError');
   const loginMessage = document.getElementById('loginMessage');
   const reviewerEmail = document.getElementById('reviewerEmail');
@@ -22,6 +25,7 @@
   let session = null;
   let reports = [];
   let selectedId = null;
+  let pendingEmail = '';
 
   const labels = { received: 'Recebido', in_review: 'Em análise', closed: 'Encerrado' };
   const fmt = value => value ? new Intl.DateTimeFormat('pt-BR', { dateStyle:'short', timeStyle:'short' }).format(new Date(value)) : '—';
@@ -43,20 +47,58 @@
   const showLoginError = message => { loginError.textContent = message; loginError.classList.add('show'); };
   const clearLoginError = () => { loginError.textContent = ''; loginError.classList.remove('show'); };
 
+  const showOtpStep = email => {
+    pendingEmail = email;
+    loginForm.style.display = 'none';
+    otpForm.style.display = 'block';
+    loginMessage.textContent = `Enviamos um código de 6 dígitos para ${email}. Digite-o abaixo para entrar.`;
+    loginMessage.style.display = 'block';
+    otpCode.value = '';
+    setTimeout(() => otpCode.focus(), 50);
+  };
+
+  const showEmailStep = () => {
+    pendingEmail = '';
+    otpForm.style.display = 'none';
+    loginForm.style.display = 'block';
+    loginMessage.style.display = 'none';
+    clearLoginError();
+    setTimeout(() => loginEmail.focus(), 50);
+  };
+
   loginForm.addEventListener('submit', async event => {
     event.preventDefault(); clearLoginError(); loginMessage.style.display = 'none';
     loginBtn.disabled = true; loginBtn.textContent = 'Enviando...';
     try {
+      const email = loginEmail.value.trim();
       const { error } = await client.auth.signInWithOtp({
-        email: loginEmail.value.trim(),
-        options:{ shouldCreateUser:false, emailRedirectTo: ADMIN_REDIRECT_URL }
+        email,
+        options:{ shouldCreateUser:false }
       });
       if (error) throw error;
-      loginMessage.textContent = 'Link de acesso enviado. Verifique o e-mail e abra o link neste navegador.';
-      loginMessage.style.display = 'block';
-    } catch (error) { showLoginError(error.message || 'Não foi possível enviar o link.'); }
-    finally { loginBtn.disabled = false; loginBtn.textContent = 'Enviar link de acesso'; }
+      showOtpStep(email);
+    } catch (error) { showLoginError(error.message || 'Não foi possível enviar o código.'); }
+    finally { loginBtn.disabled = false; loginBtn.textContent = 'Enviar código de acesso'; }
   });
+
+  otpForm.addEventListener('submit', async event => {
+    event.preventDefault(); clearLoginError();
+    const token = otpCode.value.replace(/\D/g,'').slice(0,6);
+    if (!pendingEmail || token.length !== 6) { showLoginError('Digite o código de 6 dígitos enviado por e-mail.'); return; }
+    otpBtn.disabled = true; otpBtn.textContent = 'Validando...';
+    try {
+      const { data, error } = await client.auth.verifyOtp({ email: pendingEmail, token, type:'email' });
+      if (error) throw error;
+      if (!data.session) throw new Error('Não foi possível iniciar a sessão.');
+      loginMessage.style.display = 'none';
+      await activate(data.session);
+    } catch (error) {
+      showLoginError(error.message || 'Código inválido ou expirado. Solicite um novo código.');
+    } finally { otpBtn.disabled = false; otpBtn.textContent = 'Entrar no painel'; }
+  });
+
+  otpCode.addEventListener('input', () => { otpCode.value = otpCode.value.replace(/\D/g,'').slice(0,6); });
+  changeEmailBtn.addEventListener('click', showEmailStep);
 
   const renderReports = () => {
     const q = searchReports.value.trim().toLowerCase();
@@ -129,5 +171,8 @@
   };
 
   client.auth.getSession().then(({data}) => activate(data.session));
-  client.auth.onAuthStateChange((_event, nextSession) => activate(nextSession));
+  client.auth.onAuthStateChange((event, nextSession) => {
+    if (event === 'SIGNED_OUT') activate(null);
+    else if (nextSession) activate(nextSession);
+  });
 })();
