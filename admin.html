@@ -23,24 +23,21 @@
       <div class="admin-card login-card">
         <span class="eyebrow">Área restrita</span>
         <h1>Painel do canal</h1>
-        <p id="loginIntro">Acesso exclusivo a revisores autorizados. Informe o e-mail corporativo cadastrado para receber um código de acesso.</p>
+        <p id="loginIntro">Acesso exclusivo a revisores autorizados. Entre com o e-mail corporativo e a senha cadastrados.</p>
 
         <form id="loginForm">
-          <div class="admin-field"><label for="loginEmail">E-mail</label><input id="loginEmail" type="email" autocomplete="email" value="rh@credvix.com" required></div>
-          <button class="btn btn-primary" type="submit" id="loginBtn" style="margin-top:16px;width:100%">Enviar código de acesso</button>
-        </form>
-
-        <form id="otpForm" style="display:none">
           <div class="admin-field">
-            <label for="otpCode">Código de acesso</label>
-            <input id="otpCode" class="otp-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="10" pattern="[0-9]{6,10}" placeholder="Digite o código recebido" required>
+            <label for="loginEmail">E-mail</label>
+            <input id="loginEmail" type="email" autocomplete="username" value="rh@credvix.com" required>
           </div>
-          <button class="btn btn-primary" type="submit" id="otpBtn" style="margin-top:16px;width:100%">Entrar no painel</button>
-          <button class="btn btn-secondary" type="button" id="changeEmailBtn" style="margin-top:10px;width:100%">Usar outro e-mail</button>
+          <div class="admin-field">
+            <label for="loginPassword">Senha</label>
+            <input id="loginPassword" type="password" autocomplete="current-password" required>
+          </div>
+          <button class="btn btn-primary" type="submit" id="loginBtn" style="margin-top:16px;width:100%">Entrar no painel</button>
         </form>
 
         <div class="admin-error" id="loginError"></div>
-        <p id="loginMessage" style="display:none;margin-top:14px"></p>
       </div>
     </section>
 
