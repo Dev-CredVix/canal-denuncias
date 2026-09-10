@@ -7,14 +7,10 @@
   const login = document.getElementById('adminLogin');
   const panel = document.getElementById('adminPanel');
   const loginForm = document.getElementById('loginForm');
-  const otpForm = document.getElementById('otpForm');
   const loginEmail = document.getElementById('loginEmail');
-  const otpCode = document.getElementById('otpCode');
+  const loginPassword = document.getElementById('loginPassword');
   const loginBtn = document.getElementById('loginBtn');
-  const otpBtn = document.getElementById('otpBtn');
-  const changeEmailBtn = document.getElementById('changeEmailBtn');
   const loginError = document.getElementById('loginError');
-  const loginMessage = document.getElementById('loginMessage');
   const reviewerEmail = document.getElementById('reviewerEmail');
   const reportList = document.getElementById('reportList');
   const adminDetail = document.getElementById('adminDetail');
@@ -25,7 +21,6 @@
   let session = null;
   let reports = [];
   let selectedId = null;
-  let pendingEmail = '';
 
   const labels = { received: 'Recebido', in_review: 'Em análise', closed: 'Encerrado' };
   const fmt = value => value ? new Intl.DateTimeFormat('pt-BR', { dateStyle:'short', timeStyle:'short' }).format(new Date(value)) : '—';
@@ -47,61 +42,27 @@
   const showLoginError = message => { loginError.textContent = message; loginError.classList.add('show'); };
   const clearLoginError = () => { loginError.textContent = ''; loginError.classList.remove('show'); };
 
-  const showOtpStep = email => {
-    pendingEmail = email;
-    loginForm.style.display = 'none';
-    otpForm.style.display = 'block';
-    loginMessage.textContent = `Enviamos um código de acesso para ${email}. Digite o código completo abaixo para entrar.`;
-    loginMessage.style.display = 'block';
-    otpCode.value = '';
-    setTimeout(() => otpCode.focus(), 50);
-  };
-
-  const showEmailStep = () => {
-    pendingEmail = '';
-    otpForm.style.display = 'none';
-    loginForm.style.display = 'block';
-    loginMessage.style.display = 'none';
-    clearLoginError();
-    setTimeout(() => loginEmail.focus(), 50);
-  };
-
   loginForm.addEventListener('submit', async event => {
-    event.preventDefault(); clearLoginError(); loginMessage.style.display = 'none';
-    loginBtn.disabled = true; loginBtn.textContent = 'Enviando...';
+    event.preventDefault();
+    clearLoginError();
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Entrando...';
     try {
-      const email = loginEmail.value.trim();
-      const { error } = await client.auth.signInWithOtp({
-        email,
-        options:{ shouldCreateUser:false }
+      const { data, error } = await client.auth.signInWithPassword({
+        email: loginEmail.value.trim(),
+        password: loginPassword.value
       });
       if (error) throw error;
-      showOtpStep(email);
-    } catch (error) { showLoginError(error.message || 'Não foi possível enviar o código.'); }
-    finally { loginBtn.disabled = false; loginBtn.textContent = 'Enviar código de acesso'; }
-  });
-
-  otpForm.addEventListener('submit', async event => {
-    event.preventDefault(); clearLoginError();
-    const token = otpCode.value.replace(/\D/g,'').slice(0,10);
-    if (!pendingEmail || token.length < 6 || token.length > 10) {
-      showLoginError('Digite o código completo enviado por e-mail.');
-      return;
-    }
-    otpBtn.disabled = true; otpBtn.textContent = 'Validando...';
-    try {
-      const { data, error } = await client.auth.verifyOtp({ email: pendingEmail, token, type:'email' });
-      if (error) throw error;
       if (!data.session) throw new Error('Não foi possível iniciar a sessão.');
-      loginMessage.style.display = 'none';
+      loginPassword.value = '';
       await activate(data.session);
     } catch (error) {
-      showLoginError(error.message || 'Código inválido ou expirado. Solicite um novo código.');
-    } finally { otpBtn.disabled = false; otpBtn.textContent = 'Entrar no painel'; }
+      showLoginError(error.message || 'E-mail ou senha inválidos.');
+    } finally {
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Entrar no painel';
+    }
   });
-
-  otpCode.addEventListener('input', () => { otpCode.value = otpCode.value.replace(/\D/g,'').slice(0,10); });
-  changeEmailBtn.addEventListener('click', showEmailStep);
 
   const renderReports = () => {
     const q = searchReports.value.trim().toLowerCase();
