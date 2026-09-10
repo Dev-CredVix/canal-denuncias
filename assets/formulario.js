@@ -106,10 +106,12 @@
     identityFields.hidden = document.querySelector('input[name="identity"]:checked')?.value !== 'identified';
   }));
 
-  const randomHex = bytes => {
-    const arr = new Uint8Array(bytes);
+  const randomAccessSecret = () => {
+    const arr = new Uint8Array(16);
     crypto.getRandomValues(arr);
-    return [...arr].map(x => x.toString(16).padStart(2, '0')).join('');
+    let binary = '';
+    arr.forEach(byte => { binary += String.fromCharCode(byte); });
+    return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
   };
   const hashFile = async file => {
     const digest = await crypto.subtle.digest('SHA-256', await file.arrayBuffer());
@@ -146,7 +148,7 @@
     if (err) return showError(err);
 
     const requestId = crypto.randomUUID();
-    const secret = randomHex(32);
+    const secret = randomAccessSecret();
     const payload = { action:'submit', requestId, secret, website:d.website || '', report:{ category:d.category, identity:d.identity, description:d.description.trim(), unit:(d.unit||'').trim(), when:(d.when||'').trim(), people:(d.people||'').trim(), name:d.identity==='identified'?(d.name||'').trim():'', email:d.identity==='identified'?(d.email||'').trim():'' } };
 
     submitBtn.disabled = true;
@@ -187,5 +189,19 @@
     const value = document.getElementById('accessCode').textContent;
     try { await navigator.clipboard.writeText(value); document.getElementById('copyCode').textContent = 'Copiado'; setTimeout(() => { document.getElementById('copyCode').textContent = 'Copiar'; }, 1700); }
     catch { window.getSelection()?.selectAllChildren(document.getElementById('accessCode')); }
+  });
+
+  document.getElementById('downloadCode')?.addEventListener('click', () => {
+    const value = document.getElementById('accessCode').textContent.trim();
+    if (!value) return;
+    const blob = new Blob([`Canal de Denúncias Credvix\n\nCódigo de acompanhamento:\n${value}\n\nGuarde este arquivo em local privado.\n`], {type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `credvix-denuncia-${value.split('.')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
   });
 })();
