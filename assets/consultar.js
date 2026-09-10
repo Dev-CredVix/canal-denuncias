@@ -19,7 +19,8 @@
   const attachmentInput = document.getElementById('consultAttachmentInput');
   const uploadStatus = document.getElementById('consultUploadStatus');
   const uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
-  const secret = /^[a-f0-9]{64}$/i;
+  const shortProtocol = /^CD-[0-9]{6,12}$/i;
+  const secret = /^(?:[a-f0-9]{64}|[A-Za-z0-9_-]{22})$/;
   const statusLabel = { received:'Recebido', in_review:'Em análise', closed:'Encerrado' };
   let currentCredentials = null;
   let currentStatus = null;
@@ -33,8 +34,8 @@
 
   const parseCode = value => {
     const trimmed=value.trim(); const dot=trimmed.indexOf('.'); if(dot<0)return null;
-    const protocol=trimmed.slice(0,dot); const key=trimmed.slice(dot+1);
-    return uuid.test(protocol)&&secret.test(key)?{protocol,secret:key}:null;
+    const protocol=trimmed.slice(0,dot).toUpperCase(); const key=trimmed.slice(dot+1);
+    return (uuid.test(protocol)||shortProtocol.test(protocol))&&secret.test(key)?{protocol,secret:key}:null;
   };
   const api = async payload => {
     const response=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
