@@ -51,7 +51,7 @@
     pendingEmail = email;
     loginForm.style.display = 'none';
     otpForm.style.display = 'block';
-    loginMessage.textContent = `Enviamos um código de 6 dígitos para ${email}. Digite-o abaixo para entrar.`;
+    loginMessage.textContent = `Enviamos um código de acesso para ${email}. Digite o código completo abaixo para entrar.`;
     loginMessage.style.display = 'block';
     otpCode.value = '';
     setTimeout(() => otpCode.focus(), 50);
@@ -83,8 +83,11 @@
 
   otpForm.addEventListener('submit', async event => {
     event.preventDefault(); clearLoginError();
-    const token = otpCode.value.replace(/\D/g,'').slice(0,6);
-    if (!pendingEmail || token.length !== 6) { showLoginError('Digite o código de 6 dígitos enviado por e-mail.'); return; }
+    const token = otpCode.value.replace(/\D/g,'').slice(0,10);
+    if (!pendingEmail || token.length < 6 || token.length > 10) {
+      showLoginError('Digite o código completo enviado por e-mail.');
+      return;
+    }
     otpBtn.disabled = true; otpBtn.textContent = 'Validando...';
     try {
       const { data, error } = await client.auth.verifyOtp({ email: pendingEmail, token, type:'email' });
@@ -97,7 +100,7 @@
     } finally { otpBtn.disabled = false; otpBtn.textContent = 'Entrar no painel'; }
   });
 
-  otpCode.addEventListener('input', () => { otpCode.value = otpCode.value.replace(/\D/g,'').slice(0,6); });
+  otpCode.addEventListener('input', () => { otpCode.value = otpCode.value.replace(/\D/g,'').slice(0,10); });
   changeEmailBtn.addEventListener('click', showEmailStep);
 
   const renderReports = () => {
