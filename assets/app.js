@@ -69,6 +69,9 @@
     .btn {
       font-family: 'Inter', Arial, sans-serif;
     }
+    .guidelines-section .section-heading .text-accent {
+      display: inline;
+    }
   `;
   document.head.appendChild(typography);
 
