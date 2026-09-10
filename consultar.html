@@ -8,34 +8,24 @@
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="stylesheet" href="assets/brand-refresh.css">
   <link rel="stylesheet" href="assets/mobile-refresh.css">
+  <link rel="stylesheet" href="assets/attachments.css">
 </head>
 <body>
   <header class="site-header is-scrolled"><div class="container header-inner"><a class="brand" href="./"><img src="assets/logo-credvix.webp" alt="Credvix"></a><div class="header-actions"><a class="btn btn-primary" href="formulario.html">Fazer denúncia <span aria-hidden="true">›</span></a><button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h16"/></svg></button></div></div></header>
   <div class="mobile-panel"><a href="./">Página inicial</a><a class="btn btn-primary" href="formulario.html">Fazer denúncia</a></div>
 
-  <main class="page-shell">
-    <div class="page-container">
-      <div class="page-title"><span class="eyebrow">Acompanhamento</span><h1>Consultar denúncia</h1><p>Digite o código de acompanhamento recebido no momento do envio. Nenhum login é necessário.</p></div>
-      <section class="lookup-card">
-        <div class="error-box" id="lookupError" role="alert"></div>
-        <form class="lookup-form" id="lookupForm">
-          <input class="input" id="code" name="code" autocomplete="off" spellcheck="false" placeholder="Cole aqui o código de acompanhamento" aria-label="Código de acompanhamento">
-          <button class="btn btn-primary" type="submit" id="lookupBtn">Consultar</button>
-        </form>
-        <p class="lookup-help">O código é composto pelo protocolo e uma chave secreta. Ele foi exibido apenas uma vez após o envio do relato.</p>
-      </section>
+  <main class="page-shell"><div class="page-container">
+    <div class="page-title"><span class="eyebrow">Acompanhamento</span><h1>Consultar denúncia</h1><p>Digite o código de acompanhamento recebido no momento do envio. Nenhum login é necessário.</p></div>
+    <section class="lookup-card"><div class="error-box" id="lookupError" role="alert"></div><form class="lookup-form" id="lookupForm"><input class="input" id="code" name="code" autocomplete="off" spellcheck="false" placeholder="Cole aqui o código de acompanhamento" aria-label="Código de acompanhamento"><button class="btn btn-primary" type="submit" id="lookupBtn">Consultar</button></form><p class="lookup-help">O código é composto pelo protocolo e uma chave secreta. Ele foi exibido apenas uma vez após o envio do relato.</p></section>
 
-      <section class="result-card" id="resultCard" aria-live="polite">
-        <div class="result-top"><div><h2>Andamento do relato</h2><p id="protocolLine"></p></div><span class="status-badge received" id="statusBadge">Recebido</span></div>
-        <div class="status-flow" id="statusFlow">
-          <div class="flow-step active" data-status="received"><div class="circle">1</div><span>Recebido</span></div>
-          <div class="flow-step" data-status="in_review"><div class="circle">2</div><span>Em análise</span></div>
-          <div class="flow-step" data-status="closed"><div class="circle">3</div><span>Encerrado</span></div>
-        </div>
-        <div class="updates"><h3>Atualizações públicas</h3><div id="updatesList"></div></div>
-      </section>
-    </div>
-  </main>
+    <section class="result-card" id="resultCard" aria-live="polite">
+      <div class="result-top"><div><h2>Andamento do relato</h2><p id="protocolLine"></p></div><span class="status-badge received" id="statusBadge">Recebido</span></div>
+      <div class="status-flow" id="statusFlow"><div class="flow-step active" data-status="received"><div class="circle">1</div><span>Recebido</span></div><div class="flow-step" data-status="in_review"><div class="circle">2</div><span>Em análise</span></div><div class="flow-step" data-status="closed"><div class="circle">3</div><span>Encerrado</span></div></div>
+      <div class="updates"><h3>Atualizações públicas</h3><div id="updatesList"></div></div>
+      <div class="updates"><h3>Evidências anexadas</h3><div id="evidenceList" class="evidence-list"></div><div class="consult-attachment-actions" id="attachmentActions"><label class="btn btn-outline" for="consultAttachmentInput">Adicionar evidências</label><input id="consultAttachmentInput" type="file" multiple hidden accept="image/jpeg,image/png,image/webp,application/pdf,text/plain,message/rfc822,audio/mpeg,audio/mp4,audio/x-m4a,audio/ogg,audio/wav,video/mp4,video/quicktime"><span class="lookup-help" id="attachmentHelp">Até 10 arquivos no total · 25 MB por arquivo.</span></div><div class="attachment-status" id="consultUploadStatus" hidden></div></div>
+    </section>
+  </div></main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/app.js"></script><script src="assets/consultar.js"></script>
 </body>
 </html>
