@@ -7,6 +7,7 @@
   <title>Fazer denúncia — Credvix</title>
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="stylesheet" href="assets/brand-refresh.css">
+  <link rel="stylesheet" href="assets/mobile-refresh.css">
 </head>
 <body>
   <header class="site-header is-scrolled"><div class="container header-inner"><a class="brand" href="./"><img src="assets/logo-credvix.webp" alt="Credvix"></a><div class="header-actions"><a class="btn btn-secondary" href="consultar.html">Consultar denúncia <span aria-hidden="true">›</span></a><button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h16"/></svg></button></div></div></header>
@@ -58,9 +59,7 @@
               <div class="choice"><input type="radio" id="anonymous" name="identity" value="anonymous" checked><label for="anonymous"><strong>Enviar anonimamente</strong><span>Nome e e-mail não serão solicitados nem enviados no relato.</span></label></div>
               <div class="choice"><input type="radio" id="identified" name="identity" value="identified"><label for="identified"><strong>Quero me identificar</strong><span>Informe nome e e-mail para eventual contato durante a apuração.</span></label></div>
             </div>
-            <div id="identityFields" hidden style="margin-top:20px">
-              <div class="field-grid"><div class="field"><label for="name">Nome</label><input class="input" id="name" name="name" maxlength="120" autocomplete="name"></div><div class="field"><label for="email">E-mail</label><input class="input" id="email" name="email" type="email" maxlength="254" autocomplete="email"></div></div>
-            </div>
+            <div id="identityFields" hidden style="margin-top:20px"><div class="field-grid"><div class="field"><label for="name">Nome</label><input class="input" id="name" name="name" maxlength="120" autocomplete="name"></div><div class="field"><label for="email">E-mail</label><input class="input" id="email" name="email" type="email" maxlength="254" autocomplete="email"></div></div></div>
             <div class="form-actions"><button class="btn btn-outline" type="button" data-back>Voltar</button><div class="right"><button class="btn btn-primary" type="button" data-next>Revisar relato <span aria-hidden="true">›</span></button></div></div>
           </div>
 
@@ -74,8 +73,7 @@
 
         <div class="success-screen" id="successScreen">
           <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg></div>
-          <h2>Denúncia recebida</h2>
-          <p>Seu relato foi registrado. Guarde o código abaixo: ele é a única forma de consultar o andamento desta denúncia sem fazer login.</p>
+          <h2>Denúncia recebida</h2><p>Seu relato foi registrado. Guarde o código abaixo: ele é a única forma de consultar o andamento desta denúncia sem fazer login.</p>
           <div class="access-code"><label>Código de acompanhamento</label><div class="code-line"><div class="code-value" id="accessCode"></div><button class="copy-btn" id="copyCode" type="button">Copiar</button></div></div>
           <div class="success-warning"><strong>Importante:</strong> por segurança, este código não será exibido novamente. Salve-o em local privado antes de fechar a página.</div>
           <div style="margin-top:24px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="btn btn-primary" href="consultar.html">Consultar denúncia</a><a class="btn btn-outline" href="./">Voltar ao início</a></div>
@@ -83,7 +81,6 @@
       </section>
     </div>
   </main>
-  <script src="assets/app.js"></script>
-  <script src="assets/formulario.js"></script>
+  <script src="assets/app.js"></script><script src="assets/formulario.js"></script>
 </body>
 </html>
