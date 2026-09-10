@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fffaf7">
+  <title>Fazer denúncia — Credvix</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="site-header is-scrolled"><div class="container header-inner"><a class="brand" href="./"><img src="assets/logo-credvix.webp" alt="Credvix"></a><div class="header-actions"><a class="btn btn-secondary" href="consultar.html">Consultar denúncia <span aria-hidden="true">›</span></a><button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h16"/></svg></button></div></div></header>
+  <div class="mobile-panel"><a href="./">Página inicial</a><a class="btn btn-primary" href="consultar.html">Consultar denúncia</a></div>
+
+  <main class="page-shell">
+    <div class="page-container">
+      <div class="page-title"><span class="eyebrow">Canal de Denúncias</span><h1>Conte o que aconteceu</h1><p>Preencha as etapas abaixo com o máximo de clareza. Você pode fazer o relato sem se identificar.</p></div>
+
+      <section class="form-card" id="formCard">
+        <div class="progress" aria-label="Progresso do formulário">
+          <div class="progress-step active" data-progress="1"><span>Categoria</span></div>
+          <div class="progress-step" data-progress="2"><span>Detalhes</span></div>
+          <div class="progress-step" data-progress="3"><span>Identificação</span></div>
+          <div class="progress-step" data-progress="4"><span>Revisão</span></div>
+        </div>
+        <div class="error-box" id="errorBox" role="alert"></div>
+
+        <form id="reportForm" novalidate>
+          <div class="honeypot" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+          <div class="form-step active" data-step="1">
+            <h2>Qual é o tipo de situação?</h2><p class="lead">Selecione a categoria que mais se aproxima do ocorrido.</p>
+            <div class="choice-grid" id="categoryChoices">
+              <div class="choice"><input type="radio" id="cat1" name="category" value="Assédio moral"><label for="cat1"><strong>Assédio moral</strong><span>Constrangimento, humilhação, intimidação ou perseguição.</span></label></div>
+              <div class="choice"><input type="radio" id="cat2" name="category" value="Assédio sexual"><label for="cat2"><strong>Assédio sexual</strong><span>Abordagem, insinuação ou conduta sexual inadequada.</span></label></div>
+              <div class="choice"><input type="radio" id="cat3" name="category" value="Discriminação"><label for="cat3"><strong>Discriminação</strong><span>Preconceito ou tratamento discriminatório.</span></label></div>
+              <div class="choice"><input type="radio" id="cat4" name="category" value="Fraude ou corrupção"><label for="cat4"><strong>Fraude ou corrupção</strong><span>Desvio, favorecimento, suborno ou falsificação.</span></label></div>
+              <div class="choice"><input type="radio" id="cat5" name="category" value="Uso indevido de informações"><label for="cat5"><strong>Uso indevido de informações</strong><span>Acesso, exposição ou utilização imprópria de dados.</span></label></div>
+              <div class="choice"><input type="radio" id="cat6" name="category" value="Outra conduta inadequada"><label for="cat6"><strong>Outra conduta inadequada</strong><span>Situação que não se encaixa nas opções anteriores.</span></label></div>
+            </div>
+            <div class="form-actions"><a class="btn btn-outline" href="./">Cancelar</a><div class="right"><button class="btn btn-primary" type="button" data-next>Continuar <span aria-hidden="true">›</span></button></div></div>
+          </div>
+
+          <div class="form-step" data-step="2">
+            <h2>Detalhes do ocorrido</h2><p class="lead">Não é necessário escrever nomes completos caso isso coloque você em risco. Informe apenas o que for relevante.</p>
+            <div class="field-grid">
+              <div class="field"><label for="unit">Unidade, loja ou setor</label><input class="input" id="unit" name="unit" maxlength="160" placeholder="Ex.: Loja Centro, Financeiro, RH"><span class="hint">Opcional.</span></div>
+              <div class="field"><label for="when">Quando aconteceu?</label><input class="input" id="when" name="when" maxlength="160" placeholder="Ex.: 09/09/2026, aproximadamente 15h"><span class="hint">Opcional; pode ser aproximado.</span></div>
+            </div>
+            <div class="field"><label for="people">Pessoas envolvidas ou testemunhas</label><input class="input" id="people" name="people" maxlength="500" placeholder="Informe nomes, funções ou contexto, se souber"><span class="hint">Opcional.</span></div>
+            <div class="field"><label for="description">Descreva o que aconteceu *</label><textarea class="textarea" id="description" name="description" minlength="30" maxlength="10000" required placeholder="Descreva os fatos, o contexto e qualquer informação que ajude na apuração."></textarea><span class="hint"><span id="charCount">0</span>/10000 caracteres · mínimo de 30.</span></div>
+            <div class="form-actions"><button class="btn btn-outline" type="button" data-back>Voltar</button><div class="right"><button class="btn btn-primary" type="button" data-next>Continuar <span aria-hidden="true">›</span></button></div></div>
+          </div>
+
+          <div class="form-step" data-step="3">
+            <h2>Como você quer enviar?</h2><p class="lead">Você pode permanecer anônimo. A identificação é opcional.</p>
+            <div class="choice-grid">
+              <div class="choice"><input type="radio" id="anonymous" name="identity" value="anonymous" checked><label for="anonymous"><strong>Enviar anonimamente</strong><span>Nome e e-mail não serão solicitados nem enviados no relato.</span></label></div>
+              <div class="choice"><input type="radio" id="identified" name="identity" value="identified"><label for="identified"><strong>Quero me identificar</strong><span>Informe nome e e-mail para eventual contato durante a apuração.</span></label></div>
+            </div>
+            <div id="identityFields" hidden style="margin-top:20px">
+              <div class="field-grid"><div class="field"><label for="name">Nome</label><input class="input" id="name" name="name" maxlength="120" autocomplete="name"></div><div class="field"><label for="email">E-mail</label><input class="input" id="email" name="email" type="email" maxlength="254" autocomplete="email"></div></div>
+            </div>
+            <div class="form-actions"><button class="btn btn-outline" type="button" data-back>Voltar</button><div class="right"><button class="btn btn-primary" type="button" data-next>Revisar relato <span aria-hidden="true">›</span></button></div></div>
+          </div>
+
+          <div class="form-step" data-step="4">
+            <h2>Revise antes de enviar</h2><p class="lead">Confira as informações. Depois do envio, o conteúdo do relato não poderá ser editado pela página pública.</p>
+            <dl class="review-box" id="reviewBox"></dl>
+            <label class="consent"><input type="checkbox" id="goodFaith" required><span>Confirmo que as informações acima foram prestadas de boa-fé e correspondem, da melhor forma possível, aos fatos que desejo relatar.</span></label>
+            <div class="form-actions"><button class="btn btn-outline" type="button" data-back>Voltar</button><div class="right"><button class="btn btn-primary" id="submitBtn" type="submit">Enviar denúncia</button></div></div>
+          </div>
+        </form>
+
+        <div class="success-screen" id="successScreen">
+          <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg></div>
+          <h2>Denúncia recebida</h2>
+          <p>Seu relato foi registrado. Guarde o código abaixo: ele é a única forma de consultar o andamento desta denúncia sem fazer login.</p>
+          <div class="access-code"><label>Código de acompanhamento</label><div class="code-line"><div class="code-value" id="accessCode"></div><button class="copy-btn" id="copyCode" type="button">Copiar</button></div></div>
+          <div class="success-warning"><strong>Importante:</strong> por segurança, este código não será exibido novamente. Salve-o em local privado antes de fechar a página.</div>
+          <div style="margin-top:24px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="btn btn-primary" href="consultar.html">Consultar denúncia</a><a class="btn btn-outline" href="./">Voltar ao início</a></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="assets/app.js"></script>
+  <script src="assets/formulario.js"></script>
+</body>
+</html>
