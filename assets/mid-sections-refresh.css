@@ -1,0 +1,95 @@
+/* Mid-page composition and rhythm — closer to the reference experience, in Credvix identity */
+.section{position:relative;padding:118px 0}
+.section-heading{max-width:850px;margin-bottom:62px}
+.section-heading .eyebrow,.split-heading .eyebrow{margin-bottom:15px}
+.section-heading h2,.split-heading h2{text-wrap:balance}
+.section-heading p,.split-heading p{max-width:760px}
+
+/* subtle section separators */
+.guidelines-section:before,.steps-section:before,.transparency-section:before,.commitment-section:before,#proteja-se:before{content:"";position:absolute;left:50%;top:0;width:min(1180px,calc(100% - 40px));height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(255,122,0,.12),transparent)}
+
+/* trust cards: stronger deck effect */
+.trust-section{padding-bottom:70px}
+.trust-grid{align-items:start}
+.trust-list{position:relative}
+.trust-list:before{content:"";position:absolute;left:-22px;top:30px;bottom:120px;width:1px;background:linear-gradient(180deg,transparent,rgba(255,122,0,.22) 18%,rgba(255,122,0,.13) 82%,transparent)}
+.trust-card{overflow:hidden}
+.trust-card:after{content:"";position:absolute;right:-60px;bottom:-75px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,0,.07),transparent 70%);pointer-events:none}
+.trust-card h3{font-size:1.18rem;margin-bottom:12px}.trust-card p{font-size:.96rem;line-height:1.72}
+
+/* Guidelines become two large editorial panels */
+.guidelines-section{padding-top:130px;padding-bottom:155px;overflow:clip}
+.guidelines-section:after{content:"";position:absolute;right:-170px;top:25%;width:390px;height:390px;border-radius:50%;border:1px solid rgba(255,122,0,.08);box-shadow:0 0 0 44px rgba(255,122,0,.025),0 0 0 88px rgba(255,122,0,.018);pointer-events:none}
+.guideline-stack{max-width:1100px;margin:auto}
+.guideline-card{min-height:610px;overflow:hidden}
+.guideline-card.good{box-shadow:0 28px 70px rgba(122,65,18,.14)}
+.guideline-card.bad{box-shadow:0 28px 70px rgba(38,36,33,.10)}
+.guideline-card .guideline-copy{position:relative;z-index:2}
+.guideline-card .guideline-visual{position:relative;z-index:1}
+.guideline-card .guideline-visual:before{content:"";position:absolute;width:330px;height:330px;border-radius:50%;background:rgba(255,255,255,.58);box-shadow:0 0 0 34px rgba(255,255,255,.22);z-index:-1}
+.guideline-card.bad .guideline-visual:before{background:#f6f3ef;box-shadow:0 0 0 34px rgba(246,243,239,.58)}
+.guideline-item{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.guideline-item:hover{transform:translateX(5px);box-shadow:0 12px 25px rgba(71,42,18,.07);border-color:rgba(255,122,0,.18)}
+
+/* How it works: visual rail */
+.steps-section{padding-top:138px;padding-bottom:138px;background:linear-gradient(180deg,rgba(255,250,245,0),#fffaf5 50%,rgba(255,250,245,0))}
+.steps-four{position:relative;gap:20px}
+.steps-four:before{content:"";position:absolute;left:8%;right:8%;top:57px;height:2px;background:linear-gradient(90deg,rgba(255,122,0,.10),rgba(255,122,0,.32),rgba(255,122,0,.10));z-index:0}
+.steps-four .step-card{z-index:1;min-height:320px;padding-top:28px}
+.steps-four .step-icon{position:relative;background:#fff;border:1px solid rgba(255,122,0,.20);box-shadow:0 0 0 9px #fffaf5,0 9px 24px rgba(91,48,15,.08)}
+.steps-four .step-card:nth-child(2),.steps-four .step-card:nth-child(4){margin-top:38px}
+.steps-four .step-card:nth-child(1),.steps-four .step-card:nth-child(3){margin-bottom:38px}
+.steps-four .step-card h3{margin-top:6px;font-size:1.13rem}.steps-four .step-card p{line-height:1.7}
+
+/* Transparency: wider, calmer process card */
+.transparency-section{padding-top:134px;padding-bottom:142px}
+.transparency-section .section-heading{margin-bottom:54px}
+.timeline-card{max-width:1120px;margin:auto;padding:64px 54px 50px;border-radius:30px;box-shadow:0 18px 48px rgba(67,38,13,.07)}
+.timeline-step{position:relative;padding-inline:10px}
+.timeline-step h3{font-size:1.08rem;margin-bottom:8px}.timeline-step p{font-size:.91rem;line-height:1.62}
+.timeline-step:not(:last-child):after{content:"";position:absolute;right:-10px;top:94px;width:1px;height:42px;background:linear-gradient(transparent,rgba(69,55,43,.11),transparent)}
+
+/* Commitment: editorial split section like the reference */
+.commitment-section{padding-top:145px;padding-bottom:150px}
+.commitment-grid{min-height:640px}
+.commitment-copy{padding-left:12px}
+.commitment-copy h2{max-width:620px;margin-bottom:44px}
+.commitment-list{gap:32px}
+.commitment-list article{padding:5px 0;transition:transform .25s ease}
+.commitment-list article:hover{transform:translateX(6px)}
+.commitment-list article>span{width:4px;min-height:78px;background:linear-gradient(180deg,#f0ece7,#f0ece7)}
+.commitment-list h3{font-size:1.15rem}.commitment-list p{max-width:560px}
+.commitment-visual{position:sticky;top:150px}
+.visual-stage{position:relative;padding:26px;border-radius:38px;overflow:hidden}
+.visual-stage:before{content:"";position:absolute;inset:18px;border-radius:28px;background-image:radial-gradient(rgba(243,91,0,.16) 1px,transparent 1px);background-size:20px 20px;opacity:.26;mask-image:linear-gradient(140deg,#000,transparent 75%)}
+.visual-stage svg{position:relative;z-index:1}
+
+/* Protection section: more air and separate cards */
+#proteja-se{padding-top:136px;padding-bottom:144px}
+#proteja-se .safety-grid{border:0;gap:18px;overflow:visible;border-radius:0;box-shadow:none;background:transparent}
+#proteja-se .safety-card{border:1px solid rgba(255,122,0,.10);border-radius:22px;padding:32px 30px;box-shadow:0 14px 36px rgba(75,42,18,.055);transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease}
+#proteja-se .safety-card:hover{transform:translateY(-6px);box-shadow:0 22px 44px rgba(75,42,18,.09);border-color:rgba(255,122,0,.22)}
+#proteja-se .safety-card h3{font-size:1.08rem;margin-bottom:10px}#proteja-se .safety-card p{font-size:.92rem;line-height:1.7}
+
+/* Tracking card gets its own stage */
+.tracking-section{position:relative;padding:42px 0 132px}
+.tracking-card{min-height:490px;padding:64px 68px;overflow:hidden}
+.tracking-card:before{content:"";position:absolute;right:-150px;top:-150px;width:410px;height:410px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,0,.10),transparent 69%);pointer-events:none}
+.tracking-card>div{position:relative;z-index:1}.tracking-card h2{font-size:clamp(2.65rem,4.8vw,4.45rem);text-wrap:balance}.tracking-badges span{box-shadow:inset 0 0 0 1px rgba(255,122,0,.08)}
+
+/* FAQ slightly more editorial */
+#faq{padding-top:134px;padding-bottom:132px}.faq-list{max-width:930px}.faq-question{padding:23px 25px;font-size:.97rem}.faq-answer>div{padding:0 25px 23px;line-height:1.72}
+
+/* Stagger reveals within groups */
+.steps-four [data-reveal]:nth-child(2),.safety-grid [data-reveal]:nth-child(2){transition-delay:.08s}
+.steps-four [data-reveal]:nth-child(3),.safety-grid [data-reveal]:nth-child(3){transition-delay:.16s}
+.steps-four [data-reveal]:nth-child(4){transition-delay:.24s}
+
+/* active nav section */
+.desktop-nav a{position:relative}
+.desktop-nav a:after{content:"";position:absolute;left:50%;right:50%;bottom:-8px;height:2px;border-radius:99px;background:linear-gradient(90deg,var(--brand-orange),var(--brand-amber));transition:left .22s ease,right .22s ease}
+.desktop-nav a.is-active{color:var(--brand-orange-2)}.desktop-nav a.is-active:after{left:8%;right:8%}
+
+@media (max-width:1080px){.section{padding:105px 0}.guideline-card{min-height:560px}.steps-four .step-card:nth-child(2),.steps-four .step-card:nth-child(4){margin-top:24px}.steps-four .step-card:nth-child(1),.steps-four .step-card:nth-child(3){margin-bottom:24px}.tracking-card{padding:52px}}
+@media (max-width:860px){.section{padding:92px 0}.guidelines-section,.steps-section,.transparency-section,.commitment-section,#proteja-se{padding-top:102px;padding-bottom:105px}.guideline-card{min-height:auto}.guideline-card .guideline-visual:before{width:260px;height:260px}.steps-four:before{display:none}.steps-four .step-card:nth-child(n){margin:0}.commitment-grid{min-height:auto}.commitment-visual{position:relative;top:auto}.tracking-section{padding:30px 0 100px}.tracking-card{min-height:auto}.trust-list:before{display:none}.timeline-step:not(:last-child):after{display:none}}
+@media (max-width:640px){.section{padding:76px 0}.section-heading{margin-bottom:40px}.guidelines-section,.steps-section,.transparency-section,.commitment-section,#proteja-se{padding-top:82px;padding-bottom:86px}.guideline-card{min-height:auto}.guideline-card .guideline-visual:before{width:220px;height:220px}.timeline-card{padding:34px 20px}.commitment-copy{padding-left:0}.visual-stage{padding:14px}.tracking-card{padding:34px 22px}.tracking-card h2{font-size:2.55rem}#proteja-se .safety-grid{gap:12px}#proteja-se .safety-card{padding:26px 22px}.faq-question{padding:20px}.faq-answer>div{padding:0 20px 20px}}
