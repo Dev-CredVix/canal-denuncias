@@ -1,4 +1,72 @@
 (() => {
+  // Tipografia mais próxima do modelo de referência:
+  // serifada editorial nos títulos + sans neutra no restante da interface.
+  const fontLink = document.createElement('link');
+  fontLink.rel = 'stylesheet';
+  fontLink.href = 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800;900&display=swap';
+  document.head.appendChild(fontLink);
+
+  const typography = document.createElement('style');
+  typography.textContent = `
+    body, button, input, textarea, select {
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    .desktop-nav a,
+    .mobile-panel a,
+    .btn,
+    .eyebrow,
+    .hero-kicker,
+    .hero-copy p,
+    .hero-notes,
+    .section-heading p,
+    .split-heading p,
+    .trust-card,
+    .guideline-card,
+    .step-card,
+    .timeline-card,
+    .safety-card,
+    .tracking-card p,
+    .commitment-list,
+    .faq-list,
+    .page-title p,
+    .form-card,
+    .lookup-card,
+    .result-card,
+    .footer {
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    .hero-copy h1,
+    .section-heading h2,
+    .split-heading h2,
+    .commitment-copy h2,
+    .tracking-card h2,
+    .cta-band h2,
+    .page-title h1 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-weight: 400;
+      letter-spacing: -.025em;
+    }
+    .accent-word {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: -.02em;
+    }
+    .trust-card h3,
+    .guideline-card h3,
+    .guideline-item strong,
+    .step-card h3,
+    .timeline-step h3,
+    .safety-card h3,
+    .commitment-list h3,
+    .faq-question,
+    .tracking-badges,
+    .btn {
+      font-family: 'Inter', Arial, sans-serif;
+    }
+  `;
+  document.head.appendChild(typography);
+
   const header = document.querySelector('.site-header');
   const menuToggle = document.querySelector('.menu-toggle');
   const mobilePanel = document.querySelector('.mobile-panel');
