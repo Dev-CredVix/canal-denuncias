@@ -3,14 +3,48 @@
   const menuToggle = document.querySelector('.menu-toggle');
   const mobilePanel = document.querySelector('.mobile-panel');
   const stickyCta = document.querySelector('.sticky-cta');
+  const progressBar = document.querySelector('.scroll-progress span');
+  const parallaxItems = [...document.querySelectorAll('[data-parallax]')];
 
   const onScroll = () => {
-    if (header) header.classList.toggle('is-scrolled', window.scrollY > 24);
-    if (stickyCta) stickyCta.classList.toggle('is-visible', window.scrollY > Math.min(520, window.innerHeight * .58));
+    const y = window.scrollY;
+    if (header) header.classList.toggle('is-scrolled', y > 24);
+    if (stickyCta) stickyCta.classList.toggle('is-visible', y > Math.min(560, window.innerHeight * .62));
+
+    if (progressBar) {
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      progressBar.style.transform = `scaleX(${Math.min(1, y / max)})`;
+    }
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      parallaxItems.forEach(el => {
+        const factor = Number(el.dataset.parallax || 0);
+        const rect = el.getBoundingClientRect();
+        const centerOffset = rect.top + rect.height / 2 - window.innerHeight / 2;
+        const translate = Math.max(-22, Math.min(22, -centerOffset * factor));
+        el.style.transform = `translate3d(0, ${translate}px, 0)`;
+      });
+    }
   };
 
   window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
   onScroll();
+
+  const revealItems = [...document.querySelectorAll('[data-reveal]')];
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+    revealItems.forEach(el => observer.observe(el));
+  } else {
+    revealItems.forEach(el => el.classList.add('is-visible'));
+  }
 
   if (menuToggle && mobilePanel) {
     menuToggle.addEventListener('click', () => {
