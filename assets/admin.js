@@ -26,6 +26,7 @@
   const fmt = value => value ? new Intl.DateTimeFormat('pt-BR', { dateStyle:'short', timeStyle:'short' }).format(new Date(value)) : '—';
   const size = bytes => bytes < 1024*1024 ? `${Math.max(1, Math.round(bytes/1024))} KB` : `${(bytes/1024/1024).toFixed(1)} MB`;
   const esc = value => String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+  const shownProtocol = report => report.protocol_code || report.id;
 
   const api = async body => {
     if (!session?.access_token) throw new Error('Sessão inválida.');
@@ -67,9 +68,9 @@
   const renderReports = () => {
     const q = searchReports.value.trim().toLowerCase();
     const status = statusFilter.value;
-    const filtered = reports.filter(r => (!status || r.status === status) && (!q || [r.id,r.category,r.unit].some(v => String(v||'').toLowerCase().includes(q))));
+    const filtered = reports.filter(r => (!status || r.status === status) && (!q || [r.protocol_code,r.id,r.category,r.unit].some(v => String(v||'').toLowerCase().includes(q))));
     if (!filtered.length) { reportList.innerHTML = '<div class="admin-loading">Nenhum relato encontrado.</div>'; return; }
-    reportList.innerHTML = filtered.map(r => `<button class="report-item ${r.id===selectedId?'active':''}" data-id="${esc(r.id)}"><div class="report-row"><strong>${esc(r.category)}</strong><span class="status-chip ${esc(r.status)}">${esc(labels[r.status]||r.status)}</span></div><small>${esc(r.unit||'Unidade não informada')} · ${esc(fmt(r.created_at))}</small><small>${esc(r.id)}</small></button>`).join('');
+    reportList.innerHTML = filtered.map(r => `<button class="report-item ${r.id===selectedId?'active':''}" data-id="${esc(r.id)}"><div class="report-row"><strong>${esc(r.category)}</strong><span class="status-chip ${esc(r.status)}">${esc(labels[r.status]||r.status)}</span></div><small>${esc(r.unit||'Unidade não informada')} · ${esc(fmt(r.created_at))}</small><small class="report-protocol">${esc(shownProtocol(r))}</small></button>`).join('');
     reportList.querySelectorAll('[data-id]').forEach(btn => btn.addEventListener('click', () => loadDetail(btn.dataset.id)));
   };
 
@@ -91,7 +92,7 @@
       const attachments = data.attachments || [];
       const updates = data.updates || [];
       adminDetail.innerHTML = `
-        <div class="detail-head"><div><h2>${esc(r.category)}</h2><p>Protocolo ${esc(r.id)} · criado em ${esc(fmt(r.created_at))}</p></div><span class="status-chip ${esc(r.status)}">${esc(labels[r.status]||r.status)}</span></div>
+        <div class="detail-head"><div><h2>${esc(r.category)}</h2><div class="detail-protocol">${esc(shownProtocol(r))}</div><p>Criado em ${esc(fmt(r.created_at))}</p></div><span class="status-chip ${esc(r.status)}">${esc(labels[r.status]||r.status)}</span></div>
         <div class="detail-section"><h3>Dados do relato</h3><div class="detail-meta">
           <div class="meta-box"><span>Unidade / setor</span><strong>${esc(r.unit||'Não informado')}</strong></div>
           <div class="meta-box"><span>Quando ocorreu</span><strong>${esc(r.occurred_at||'Não informado')}</strong></div>
